@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e  # Exit immediately if a command exits with a non-zero status.
+set -x  # All executed commands are printed to the terminal
+
+aptitude update ; apt-get install --no-install-recommends -y sslh
+
+sed -i "12d" /etc/default/sslh
+sed -i "12iRUN=yes" /etc/default/sslh
+sed -i "18iDAEMON_OPTS=\"--user sslh --listen 0.0.0.0:443 --ssh 127.0.0.1:22 --ssl 127.0.0.1:443 --openvpn 127.0.0.1:1194 --pidfile /var/run/sslh/sslh.pid\"" /etc/default/sslh
+sed -i "19d" /etc/default/sslh
+
+apt-get -y autoremove ; aptitude -y autoclean ; apt-get -y autoclean
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.aptitude
+

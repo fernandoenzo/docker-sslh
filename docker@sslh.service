@@ -1,0 +1,19 @@
+[Unit]
+Description=Docker SSLH container
+Requires=docker.service
+PartOf=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+TimeoutStartSec=infinity
+TimeoutStopSec=5
+ExecStartPre=/usr/bin/docker run -d -it --init --rm --name SSLH --hostname SSLH --network host fernandoenzo/sslh
+ExecStart=/usr/bin/docker logs -f SSLH
+ExecStop=-/usr/bin/docker stop SSLH
+Restart=always
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
+
