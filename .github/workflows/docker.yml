@@ -2,8 +2,6 @@ name: Docker SSLH
 
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: [debian-updated]
 
 env:
   REGISTRY: ghcr.io

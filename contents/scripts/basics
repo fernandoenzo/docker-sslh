@@ -3,15 +3,11 @@
 set -e  # Exit immediately if a command exits with a non-zero status.
 set -x  # All executed commands are printed to the terminal
 
-export DEBIAN_FRONTEND=noninteractive
+pacman-key --init
+pacman-key --populate archlinux
+pacman -Syu sslh nano --noconfirm
 
-aptitude update ; apt-get install --no-install-recommends -y sslh
+cp /tmp/contents/static/sslh.conf /etc/sslh.cfg
 
-mkdir -p /etc/sslh/
-cp /tmp/contents/static/default_sslh /etc/default/sslh
-cp /tmp/contents/static/sslh.conf /etc/sslh/
-sed -i '$i service sslh start > /dev/null 2>&1' /usr/local/boot
-
-apt-get -y autoremove ; aptitude -y autoclean ; apt-get -y autoclean
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.aptitude
+rm -rf /var/cache/* /tmp/* /var/tmp/*
 
