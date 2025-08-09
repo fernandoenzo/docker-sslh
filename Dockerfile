@@ -1,6 +1,4 @@
-FROM ghcr.io/fernandoenzo/debian:12
+FROM ghcr.io/fernandoenzo/debian:testing
 
-COPY scripts/ /tmp/scripts
-RUN bash /tmp/scripts/basics
-
-EXPOSE 443/tcp
+COPY contents/ /tmp/contents
+RUN bash /tmp/contents/scripts/basics

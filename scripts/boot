@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -e
-
-service cron start > /dev/null 2>&1
-service sslh start > /dev/null 2>&1
-exec /bin/bash -c "$@"

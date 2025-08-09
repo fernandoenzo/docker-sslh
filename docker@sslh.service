@@ -3,14 +3,16 @@ Description=Docker SSLH container
 Requires=docker.service
 After=docker.service network-online.target
 Wants=network-online.target
+StartLimitIntervalSec=0
 
 [Service]
 TimeoutStartSec=infinity
 TimeoutStopSec=5
-ExecStartPre=/usr/bin/docker run -d -it --init --rm --name SSLH --hostname SSLH --network host fernandoenzo/sslh
+ExecStartPre=/usr/bin/docker run -d -it --init --rm --cap-add=NET_ADMIN --cap-add=NET_RAW --cap-add=NET_BIND_SERVICE --name SSLH --hostname SSLH --network host ghcr.io/fernandoenzo/sslh
 ExecStart=/usr/bin/docker logs -f SSLH
 ExecStop=-/usr/bin/docker stop SSLH
 Restart=always
+RestartSec=1s
 SuccessExitStatus=143
 
 [Install]
